@@ -3,7 +3,6 @@ import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.component.table.ParamsTable;
 import com.supanadit.restsuite.helper.UrlParser;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;

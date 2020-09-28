@@ -3,7 +3,7 @@ package analyse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+import java.io.FileNotFoundException;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Font;
 import guru.nidi.graphviz.attribute.Rank;
@@ -20,32 +20,37 @@ import spoon.reflect.CtModel;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 import static guru.nidi.graphviz.model.Factory.*;
+import java.util.Scanner;
+
+
 
 public class GraphVizMain {
 
 	public static void main(String[] args) {
 
-		Graph g = graph("example1").directed()
-				.graphAttr().with(Rank.dir(RankDir.LEFT_TO_RIGHT))
-				.nodeAttr().with(Font.name("arial"))
-				.linkAttr().with("class", "link-class")
-				.with(
-						node("a").with(Color.RED).link(node("b")),
-						node("b").link(
-								to(node("c"))//.with(attr("weight", 5), Style.DASHED)
-								)
-						);
-		try {
-			Graphviz.fromGraph(g).height(100).render(Format.PNG).toFile(new File("./ex1.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		MutableGraph graphDeDependances = mutGraph("graphe de dépendances").setDirected(true);
+		//graphDeDependances.add(mutNode(name))
 		
-		MutableGraph g2 = mutGraph("example1").setDirected(true).add(
-		        mutNode("a").add(Color.RED).addLink(mutNode("b")));
 		try {
-			Graphviz.fromGraph(g2).width(200).render(Format.PNG).toFile(new File("./ex1m.png"));
+		      File myObj = new File("appels.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        String dataTable[] = data.split("->");
+		        //System.out.println(dataTable[0] + "==="+ dataTable[1]);
+		        
+		        graphDeDependances.add(mutNode(dataTable[0]).addLink(dataTable[1]));
+		      }
+		      myReader.close();
+		    } catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+		
+		
+		try {
+			Graphviz.fromGraph(graphDeDependances).width(7500)/*.height(5000)*/.render(Format.PNG).toFile(new File("./graphe_de_dependances.png"));
+			Graphviz.fromGraph(graphDeDependances).width(7500)/*.height(5000)*/.render(Format.DOT).toFile(new File("./graphe_de_dependances.dot"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

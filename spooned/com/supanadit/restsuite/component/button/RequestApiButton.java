@@ -1,4 +1,6 @@
 package com.supanadit.restsuite.component.button;
+import MultipartBody.FORM;
+import SyntaxConstants.SYNTAX_STYLE_NONE;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.model.*;
@@ -13,12 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.JButton;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.Request.Builder;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import javax.swing.*;
 import okhttp3.*;
@@ -81,7 +79,7 @@ public class RequestApiButton extends JButton {
                     requestBody = RequestBody.create(bodyRawValue, mediaType);
                 } else {
                     MultipartBody.Builder builder = new MultipartBody.Builder();
-                    builder.setType(MultipartBody.FORM);
+                    builder.setType(FORM);
                     ArrayList<BodyFormInputPanel> listFormInput = tabPanel.bodyPanel.bodyFormPanel.listInputPanel;
                     if (listFormInput.size() != 0) {
                         for (BodyFormInputPanel body : listFormInput) {
@@ -140,7 +138,7 @@ public class RequestApiButton extends JButton {
                         }
                         responseBodyPanel.setSyntax(header);
                     } else {
-                        responseBodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
+                        responseBodyPanel.setSyntax(SYNTAX_STYLE_NONE);
                     }
                     if (responseBodyPanel == null) {
                         System.out.println(Objects.requireNonNull(response.body()).string());

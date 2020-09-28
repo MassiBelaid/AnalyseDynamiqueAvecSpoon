@@ -12,6 +12,7 @@ import spoon.compiler.Environment;
 import spoon.reflect.CtModel;
 import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtCodeSnippetExpression;
+import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
@@ -67,20 +68,63 @@ public class SpoonMain {
 			Set<CtMethod> methodesClasse = cls.getMethods();
 			for(CtMethod md : methodesClasse) {
 				CtBlock mdBlock = md.getBody();
-				System.out.println(mdBlock.toString()+"\n=============");
+				//System.out.println(mdBlock.toString()+"\n=============");
+				System.out.println(md.getSimpleName()+"================================");
+				
+				List < CtInvocation > refs = md.getElements(new TypeFilter < CtInvocation > (CtInvocation.class));
+				try {
+					for(CtInvocation inv : refs) {
+						//System.out.println("==============================");
+						/*System.out.println("Cible : "+inv.getTarget().getType().toString());
+						System.out.println("Source : "+inv.getExecutable().getSimpleName());*/
+						Boolean cor = false;
+						for (CtClass cls2 : classList) {
+							if(cls2.getSimpleName().equals(inv.getTarget().getType().toString())) {
+								//System.out.println("Cible : "+inv.getTarget().getType().toString());
+								//System.out.println("Source : "+inv.getExecutable().getSimpleName());
+								
+								CtCodeSnippetExpression instruction =  launcher.getFactory().createCodeSnippetExpression("System.out.println(\"  GG   \");");
+								CtStatement NewInstruction = launcher.getFactory().Code().createCodeSnippetStatement("analyse.Analyse.logAppel(\""+
+								inv.getTarget().getType().toString()+"\",\""+cls.getSimpleName()+"\")");
+								mdBlock.addStatement(0,NewInstruction);
+								md.setBody(mdBlock);
+								
+								CtBlock mdBlock2 = md.getBody();
+								System.out.println(mdBlock2.toString()+"\n=============");
+							}
+						}
+					}
+				}catch (Exception e) {
+					System.out.println("Null METHODE");
+				}
+				
 				
 				//CtCodeSnippetExpression instruction =  launcher.getFactory().createCodeSnippetExpression("System.out.println(\"  GG   \");");
-				CtStatement NewInstruction = launcher.getFactory().Code().createCodeSnippetStatement("Analyse.Analyse.logAppel(\""+cls.getSimpleName()+"\",\""+md.getSimpleName()+"\")");
+				/*CtStatement NewInstruction = launcher.getFactory().Code().createCodeSnippetStatement("analyse.Analyse.logAppel(\""+
+				cls.getSimpleName()+"\",\""+md.getSimpleName()+"\")");
 				mdBlock.addStatement(0,NewInstruction);
 				md.setBody(mdBlock);
 				
 				CtBlock mdBlock2 = md.getBody();
-				System.out.println(mdBlock2.toString()+"\n=============");
+				System.out.println(mdBlock2.toString()+"\n=============");*/
 			}
 		}
 		
+		/*for (CtMethod md : methodList) {
+			try {
+				System.out.println(md.getSimpleName()+"================================");
+				List < CtInvocation > refs = md.getElements(new TypeFilter < CtInvocation > (CtInvocation.class));
+				for(CtInvocation inv : refs) {
+					System.out.println(inv);
+				}
+			}catch (NullPointerException e) {
+				System.out.println("Methode null");
+			}
+		}*/
+		
+		
 		//Modification code source.
-		launcher.setSourceOutputDirectory("/home/e20190015195/eclipse-workspace/sortieSpoon/");
+		launcher.setSourceOutputDirectory("C:\\Users\\Massi\\Desktop\\bootstrap\\NEW");
 		launcher.prettyprint();
 		System.out.println("FINI");
 		

@@ -18,7 +18,6 @@ import javax.swing.*;
 import org.apache.batik.transcoder.TranscoderException;
 public class Main {
     public static void main(String[] args) {
-        // Analyse.Analyse.logAppel("Main","main");
         System.setProperty("awt.useSystemAAFontSettings", "lcd");
         System.setProperty("swing.aatext", "true");
         System.setProperty("sun.java2d.renderer", "sun.java2d.marlin.MarlinRenderingEngine");

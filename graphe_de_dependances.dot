@@ -1,0 +1,17 @@
+digraph "graphe de dépendances" {
+"Frame" -> "Main"
+"MenuBar" -> "Main"
+"InputComponent" -> "InputComponent"
+"InputTextUrlListener" -> "InputTextUrlListener"
+"UrlParser" -> "UrlParser"
+"ParamsTable" -> "ParamsTable"
+"BodyTextArea" -> "ResponseBodyPanel"
+"BodyTextArea" -> "BodyPanel"
+"RequestBodyTypeComboBox" -> "BodyPanel"
+"RequestBodyRawTypeComboBox" -> "BodyPanel"
+"HeadersFormPanel" -> "HeadersFormInputPanel"
+"HeadersFormPanel" -> "HeadersFormPanel"
+"HeadersFormInputPanel" -> "HeadersFormInputPanel"
+"InputSseURL" -> "1"
+"1" -> "1"
+}

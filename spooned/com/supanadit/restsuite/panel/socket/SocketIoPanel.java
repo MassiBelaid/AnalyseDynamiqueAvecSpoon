@@ -1,15 +1,14 @@
 package com.supanadit.restsuite.panel.socket;
+import Socket.EVENT_CONNECT;
+import Socket.EVENT_DISCONNECT;
 import com.supanadit.restsuite.component.input.InputSocketIoListener;
 import com.supanadit.restsuite.component.input.InputSocketIoMessage;
 import com.supanadit.restsuite.component.input.InputSocketIoURL;
 import com.supanadit.restsuite.listener.socket.SocketIOListenerTableRowMenuListener;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
@@ -147,13 +146,13 @@ public class SocketIoPanel extends JPanel {
                             }
                         });
                         connectDisposable = tryConnect.subscribe();
-                        socket.on(Socket.EVENT_CONNECT, ( args) -> {
+                        socket.on(EVENT_CONNECT, ( args) -> {
                             connectDisposable.dispose();
                             reloadSocketListener();
                             setStatus(true);
                             connectDisconnectButton.setText("Disconnect");
                             connectDisconnectButton.setEnabled(true);
-                        }).on(Socket.EVENT_DISCONNECT, ( args) -> {
+                        }).on(EVENT_DISCONNECT, ( args) -> {
                             tryConnect.subscribe();
                         });
                         socket.connect();

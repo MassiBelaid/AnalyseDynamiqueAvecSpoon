@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.panel.sse;
 import com.here.oksse.OkSse;
 import com.here.oksse.ServerSentEvent;
+import com.here.oksse.ServerSentEvent.Listener;
 import com.supanadit.restsuite.component.input.InputSseURL;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import net.miginfocom.swing.MigLayout;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.Response;
 import com.here.oksse.OkSse;
 import com.here.oksse.ServerSentEvent;
